@@ -21,3 +21,13 @@ class PcForm(forms.Form):
             )
 
         nuevoPc.save()
+
+    def update(self):
+        id_ = self.cleaned_data.get('idUpdate')
+        modelo_ = self.cleaned_data.get('modelo')
+        fecha_ = self.cleaned_data.get('fecha')
+
+        oldPC = Pc.objects.get(pk=id_)
+        oldPC.modelo = modelo_
+        oldPC.fecha_ = fecha_
+        oldPc.save()        

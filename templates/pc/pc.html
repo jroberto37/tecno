@@ -14,19 +14,44 @@
     <h1>Hello, world!</h1>
 
     <div class="container">
-      <form action="/pc/add" method="POST">
+      <form 
+      
+      {% if pcEdit %}
+        action="/pc/edit" 
+      {% else %}
+        action="/pc/add" 
+      {% endif %}
+      
+      method="POST">
         {% csrf_token %}
         {{ form }}
         <div class="form-group">
           <label for="modelo">Pc modelo</label>
-          <input type="text" class="form-control" id="modelo" name="modelo" aria-describedby="emailHelp" required>
+          <input type="text" class="form-control" id="modelo" name="modelo" aria-describedby="emailHelp" 
+          
+          {% if pcEdit %}
+            value = "{{pcEdit.modelo}}"
+          {% endif %}
+          
+          required>
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Fecha</label>
-          <input type="date" class="form-control" id="fecha" name="fecha" required>
+          <input type="date" class="form-control" id="fecha" name="fecha" 
+          
+          {% if pcEdit %}
+            value = "{{pcEdit.fecha}}"
+          {% endif %}          
+          
+          required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        {% if pcEdit %}
+          <input type="text" value="{{ pcEdit.id }}" name="idUpdate">
+          <button type="submit" class="btn btn-warning">Actualizar</button>
+        {% else %}
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        {% endif %}
       </form>
     </div>
 
@@ -43,12 +68,15 @@
           </tr>
         </thead>
         <tbody>
-          {% for pcs in pc %}
+          {% for pc in pcs %}
           <tr>
             <th scope="row">{{ pc.id }}</th>
             <td>{{ pc.modelo }}</td>
             <td>{{ pc.fecha }}</td>
-            <td> Editar, Eliminar  </td>
+            <td> 
+              <a href="del/{{ pc.id }}" class="btn btn-danger">Eliminar</a>
+              <a href="{{pc.id }}" class="btn btn-success"> Editar </a>  
+            </td>
           </tr>
           {% endfor %}
         </tbody>
