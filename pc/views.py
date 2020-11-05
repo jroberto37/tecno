@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from .models import Pc
 from .forms import PcForm
+from .formsUpdate import PcFormUpdate
 
 # Create your views here.
 def index(request):
@@ -37,7 +38,7 @@ def editPc(request, id=-1):
         pcEdit = Pc.objects.get(pk=id)
         return render(request, 'pc/pc.html', { 'pcs': pcs, 'pcEdit': pcEdit })    
     elif request.method == 'POST':
-        form = PcForm(request.POST)
+        form = PcFormUpdate(request.POST)
 
         if form.is_valid():
             form.update()
