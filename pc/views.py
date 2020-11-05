@@ -36,7 +36,7 @@ def editPc(request, id=-1):
         pcs = Pc.objects.all()
         pcEdit = Pc.objects.get(pk=id)
         return render(request, 'pc/pc.html', { 'pcs': pcs, 'pcEdit': pcEdit })    
-    else:
+    elif request.method == 'POST':
         form = PcForm(request.POST)
 
         if form.is_valid():

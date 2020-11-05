@@ -29,5 +29,5 @@ class PcForm(forms.Form):
 
         oldPC = Pc.objects.get(pk=id_)
         oldPC.modelo = modelo_
-        oldPC.fecha_ = fecha_
+        oldPC.fecha = fecha_
         oldPc.save()        
